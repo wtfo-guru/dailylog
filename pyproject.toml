@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "dailylog"
+version = "0.1.0"
+description = ""
+authors = ["Quien Sabe <qs5779@mail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.7"
+loguru = "^0.7.2"
+
+
+[tool.poetry.group.test.dependencies]
+isort = "^5.12.0"
+black = "^23.10.1"
+mypy = "^1.6.1"
+wemake-python-styleguide = "^0.18.0"
+flake8-pytest-style = "^1.7.2"
+doc8 = "^1.1.1"
+safety = "^2.3.5"
+pytest-cov = "^4.1.0"
+pytest-click = "^1.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
