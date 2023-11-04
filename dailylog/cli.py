@@ -2,7 +2,7 @@
 
 import sys
 import types
-from typing import AnyStr, NoReturn
+from typing import AnyStr, NoReturn, Optional
 
 import click
 from click.core import Context
@@ -31,10 +31,12 @@ def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
 
 
 @click.command()
-@click.argument("who", type=str, required=True, nargs=1)
+@click.argument("who", required=False, type=str, nargs=1)
 @click.pass_context
-def hello(ctx: Context, who: str = "world") -> NoReturn:
+def hello(ctx: Context, who: Optional[str]) -> NoReturn:
     """Print hello who."""
+    if who is None:
+        who = "world"
     click.echo("Hello {0}".format(who.capitalize()))
     sys.exit(0)
 
