@@ -34,7 +34,7 @@ def print_version(ctx: Context, _aparam: AnyStr, avalue: AnyStr) -> None:
 @click.command()
 @click.argument("log_fn", type=str, required=True, nargs=1)
 @click.pass_context
-def set_default_log(ctx: Context, logfn: str) -> NoReturn:
+def set_default_log(ctx: Context, log_fn: str) -> NoReturn:
     """Print hello who."""
     config = Config(ctx)
     config.set_default_log(log_fn)
