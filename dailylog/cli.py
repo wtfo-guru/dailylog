@@ -2,7 +2,7 @@
 
 import sys
 import types
-from typing import AnyStr, NoReturn
+from typing import AnyStr, NoReturn, Optional
 
 import click
 from click.core import Context
@@ -13,7 +13,7 @@ CONTEXT_SETTINGS = types.MappingProxyType({"help_option_names": ["-h", "--help"]
 
 
 def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
-    """Prints package version and exits.
+    """Print package version and exits.
 
     Parameters
     ----------
@@ -31,10 +31,12 @@ def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
 
 
 @click.command()
-@click.argument("who", type=str, required=True, nargs=1)
+@click.argument("who", type=str, required=False, nargs=1)
 @click.pass_context
-def hello(ctx: Context, who: str = "world") -> NoReturn:
+def set_default_log(ctx: Context, who: Optional[str]) -> NoReturn:
     """Print hello who."""
+    if who is None:
+        who = "world"
     click.echo("Hello {0}".format(who.capitalize()))
     sys.exit(0)
 
@@ -60,14 +62,14 @@ def hello(ctx: Context, who: str = "world") -> NoReturn:
 )
 @click.pass_context
 def main(ctx, debug, test, verbose):
-    """Provides single interface to several common Linux package managers."""
+    """Entry point for click script."""
     ctx.ensure_object(dict)
     ctx.obj["debug"] = debug
     ctx.obj["test"] = test
     ctx.obj["verbose"] = verbose
 
 
-main.add_command(hello)
+main.add_command(set_default_log)
 
 if __name__ == "__main__":
     sys.exit(main(obj={}))  # pragma no cover
