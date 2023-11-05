@@ -5,6 +5,9 @@ description = ""
 authors = ["Quien Sabe <qs5779@mail.com>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+dailylog = "dailylog.cli:main"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 click = "^8.1.7"
@@ -26,10 +29,6 @@ pytest-click = "^1.1.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-# TODO: Move scripts to befor dependencies
-[tool.poetry.scripts]
-dailylog = "dailylog.cli.main"
 
 [tool.nitpick]
 style = "https://raw.githubusercontent.com/wemake-services/wemake-python-styleguide/master/styles/nitpick-style-wemake.toml"
