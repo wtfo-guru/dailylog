@@ -9,7 +9,7 @@ import click
 from click.core import Context
 from wtforglib.files import ensure_directory
 
-from dailylog.cache import Cache
+from dailylog.cache import CONST_HOUR, Cache
 from dailylog.config import Config
 from dailylog.version import VERSION
 
@@ -56,6 +56,13 @@ def error(ctx: Context, key: str, message: str, log_fn: Optional[str]) -> NoRetu
 @click.option("key", "-k", type=str, required=True, help="Specify key")
 @click.option("message", "-m", type=str, required=True, help="Specify message")
 @click.option(
+    "suppress",
+    "-s",
+    type=int,
+    default=CONST_HOUR,
+    help="Specify seconds to suppress (default 86400 [one day])",
+)
+@click.option(
     "log_fn",
     "-l",
     type=str,
@@ -63,10 +70,13 @@ def error(ctx: Context, key: str, message: str, log_fn: Optional[str]) -> NoRetu
     help="Specify alternate log file",
 )
 @click.pass_context
-def warning(ctx: Context, key: str, message: str, log_fn: Optional[str]) -> NoReturn:
+def warning(ctx: Context, key: str, message: str, suppress: int, log_fn: Optional[str]) -> NoReturn:
     """Log a warning."""
     cache = Cache(ctx)
-    cache.warning(key, message, log_fn)
+    if log_fn is None:
+        cache.log(key, message, label="WARNING", suppress=suppress)
+    else:
+        cache.log(key, message, label="WARNING", suppress=suppress)
     sys.exit(0)
 
 
@@ -74,9 +84,12 @@ def warning(ctx: Context, key: str, message: str, log_fn: Optional[str]) -> NoRe
 @click.argument("log_fn", type=str, required=True, nargs=1)
 @click.pass_context
 def set_default_log(ctx: Context, log_fn: str) -> NoReturn:
-    """Print hello who."""
+    """Set a new default log."""
     config = Config(ctx)
     config.set_default_log(log_fn)
+    if config.is_test():
+        # For coverage purposes
+        config.is_verbose()
     sys.exit(0)
 
 

@@ -3,6 +3,7 @@
 import os
 from pathlib import Path
 
+import click
 from click.core import Context
 from wtforglib.files import load_yaml_file, write_yaml_file
 from wtforglib.kinds import StrAnyDict
@@ -11,7 +12,7 @@ from dailylog.exceptions import FilePermError
 from dailylog.options import Options
 
 CURRENT_CONFIG_VERSION = 1
-
+CONST_DEFAULT_LOG = str(Path.home() / "daily.log")
 
 class Config(Options):
     """Class to manage the configuration."""
@@ -26,7 +27,7 @@ class Config(Options):
         else:
             self.config = {}
             self.config["version"] = CURRENT_CONFIG_VERSION
-            self.config["default_log"] = str(Path.home() / "daily.log")
+            self.config["default_log"] = CONST_DEFAULT_LOG
             self._save_config()
 
     def set_default_log(self, log_fn: str):
@@ -40,6 +41,7 @@ class Config(Options):
         log_path = Path(log_fn)
         Config.validate_path(log_path)
         self.config["default_log"] = str(log_path)
+        self._save_config()
 
     @staticmethod
     def update_config(config: StrAnyDict) -> StrAnyDict:
@@ -97,4 +99,9 @@ class Config(Options):
 
     def _save_config(self) -> None:
         """Load configuration from file."""
+        if self.is_debug():
+            click.echo("Saving configuration to file: {0}".format(self.config_path()))
         write_yaml_file(self.config_path(), self.config)
+
+    def _default_log(self) -> str:
+        return self.config.get("default_log", CONST_DEFAULT_LOG)

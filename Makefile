@@ -23,7 +23,7 @@ lint: mypy
 	poetry run doc8 -q docs
 
 unit:
-	poetry run pytest tests
+	poetry run pytest -s tests
 
 package:
 	poetry check
