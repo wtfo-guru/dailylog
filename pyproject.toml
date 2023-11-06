@@ -26,6 +26,10 @@ safety = "^2.3.5"
 pytest-cov = "^4.1.0"
 pytest-click = "^1.1.0"
 
+
+[tool.poetry.group.tests.dependencies]
+pyfakefs = "^5.3.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

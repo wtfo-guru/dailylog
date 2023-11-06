@@ -10,7 +10,7 @@ def test_cli(cli_runner):
     test_result = cli_runner.invoke(main)
     assert test_result.exit_code == 0
     assert not test_result.exception
-    for regex in "hello":
+    for regex in ("warning", "error", "set-default-log"):
         assert re.search(regex, test_result.output)
 
 
@@ -23,19 +23,17 @@ def test_cli_with_option(cli_runner, version):
     assert test_result.output.strip() == version
 
 
-def test_cli_hello(cli_runner):
+def test_cli_set_default_log(cli_runner, fs):
     """Test cli version option."""
     # noinspection PyTypeChecker
-    test_result = cli_runner.invoke(main, ["hello"])
+    test_result = cli_runner.invoke(main, ["set-default-log"])
     assert not test_result.exception
     assert test_result.exit_code == 0
-    assert test_result.output.strip() == "Hello World"
 
 
-def test_cli_hello_option(cli_runner):
-    """Test cli version option."""
-    # noinspection PyTypeChecker
-    test_result = cli_runner.invoke(main, ["hello", "cowboy"])
-    assert not test_result.exception
-    assert test_result.exit_code == 0
-    assert test_result.output.strip() == "Hello Cowboy"
+# def test_cli_set_default_log(cli_runner, fs):
+#     """Test cli version option."""
+#     # noinspection PyTypeChecker
+#     test_result = cli_runner.invoke(main, ["-c", "/tmp/config.yml", "set-default-log"])
+#     assert not test_result.exception
+#     assert test_result.exit_code == 0
