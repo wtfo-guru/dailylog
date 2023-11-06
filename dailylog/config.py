@@ -1,56 +1,100 @@
-"""Top level module for dailylog."""
+"""Top level module config for dailylog."""
 
 import os
+from pathlib import Path
 
 from click.core import Context
-from pathlib import Path
-from dailylog.exceptions import FilePermError
+from wtforglib.files import load_yaml_file, write_yaml_file
+from wtforglib.kinds import StrAnyDict
 
-class Config:
+from dailylog.exceptions import FilePermError
+from dailylog.options import Options
+
+CURRENT_CONFIG_VERSION = 1
+
+
+class Config(Options):
     """Class to manage the configuration."""
-    config_fn: Path
+
+    config: StrAnyDict
 
     def __init__(self, ctx: Context):
         """Constructor for Config class."""
-        self.config_fn = Path(ctx.obj.get("config", ""))
-        if not str(self.config_fn):
-            raise ValueError("config path name cannot be empty")
-        if not self.config_fn.is_absolute():
-            raise ValueError("config path name must be absolute")
-        if self.config_fn .is_file():
+        super().__init__(ctx)
+        if self.config_path().is_file():
             self.config = self._load_config()
         else:
             self.config = {}
-            self.config["version"] = 1
-            self.default_log = Path().home() / "daily.log"
+            self.config["version"] = CURRENT_CONFIG_VERSION
+            self.config["default_log"] = str(Path.home() / "daily.log")
             self._save_config()
 
     def set_default_log(self, log_fn: str):
-        """_summary_
+        """Set the default log file.
 
         Parameters
         ----------
         log_fn : str
-            _description_
-
-        Raises
-        ------
-        FileNotFoundError
-            _description_
-        FilePermError
-            _description_
+            Absolute path to the log file
         """
         log_path = Path(log_fn)
-        if log_path.exists():
-            if not log_path.is_file():
-                raise FileNotFoundError("Not a file: {0}".format(log_path))
-            if not c:
-                raise FilePermError("Not writable: {0}".format(log_path))
-        elif not log_path.parent.is_dir():
-            raise FileNotFoundError("Directory not found: {0}".format(log_path.parent))
-        elif not log_path.parent.is_dir():
-            raise FileNotFoundError("Not a directory: {0}".format(log_path.parent))
-        elif not os.access(log_path.parent, os.W_OK):
-            raise FilePermError("Not writable: {0}".format(log_path.parent))
+        Config.validate_path(log_path)
+        self.config["default_log"] = str(log_path)
 
+    @staticmethod
+    def update_config(config: StrAnyDict) -> StrAnyDict:
+        """Update configuration from version to current version.
 
+        Args:
+            config (StrAnyDict): previous config verstion
+        """
+        version = config.get("version", 0)
+        if version != CURRENT_CONFIG_VERSION:
+            raise ValueError("Unknown config version: {0}".format(version))
+        return config
+
+    @staticmethod
+    def validate_path(path: Path) -> None:
+        """Validate the file path exists or can be created.
+
+        Args:
+            path (Path): files spec for log
+
+        Raises:
+            FileNotFoundError: when parent directory doesn't exist or is not a directory
+            FilePermError: when parent directory is not writable
+        """
+        if path.exists():
+            Config.validate_existing_path(path)
+        elif not path.parent.is_dir():
+            raise FileNotFoundError("Directory not found: {0}".format(path.parent))
+        elif not os.access(path.parent, os.W_OK):
+            raise FilePermError("Not writable: {0}".format(path.parent))
+
+    @staticmethod
+    def validate_existing_path(path: Path) -> None:
+        """Validate existing path.
+
+        Args:
+            path (Path): files spec for log
+
+        Raises:
+            FileNotFoundError: when path exists but is not a file
+            FilePermError: when path exists but is not writable
+        """
+        if not path.is_file():
+            raise FileNotFoundError("Not a file: {0}".format(path))
+        if not os.access(path, os.W_OK):
+            raise FilePermError("Not writable: {0}".format(path))
+
+    def _load_config(self) -> StrAnyDict:
+        """Load configuration from file."""
+        config = load_yaml_file(self.config_path())
+        version = config.get("version", 0)
+        if version != CURRENT_CONFIG_VERSION:
+            return Config.update_config(config)
+        return config
+
+    def _save_config(self) -> None:
+        """Load configuration from file."""
+        write_yaml_file(self.config_path(), self.config)

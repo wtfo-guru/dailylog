@@ -2,13 +2,16 @@
 
 import sys
 import types
+from pathlib import Path
 from typing import AnyStr, NoReturn, Optional
 
 import click
 from click.core import Context
+from wtforglib.files import ensure_directory
 
-from dailylog.version import VERSION
+from dailylog.cache import Cache
 from dailylog.config import Config
+from dailylog.version import VERSION
 
 CONTEXT_SETTINGS = types.MappingProxyType({"help_option_names": ["-h", "--help"]})
 
@@ -20,7 +23,7 @@ def print_version(ctx: Context, _aparam: AnyStr, avalue: AnyStr) -> None:
     ----------
     ctx : Context
         click context object
-    aparam : AnyStr
+    _aparam : AnyStr
         dunno
     avalue : AnyStr
         dunno
@@ -29,6 +32,42 @@ def print_version(ctx: Context, _aparam: AnyStr, avalue: AnyStr) -> None:
         return
     click.echo(VERSION)
     ctx.exit()
+
+
+@click.command()
+@click.option("key", "-k", type=str, required=True, help="Specify key")
+@click.option("message", "-m", type=str, required=True, help="Specify message")
+@click.option(
+    "log_fn",
+    "-l",
+    type=str,
+    required=False,
+    help="Specify alternate log file",
+)
+@click.pass_context
+def error(ctx: Context, key: str, message: str, log_fn: Optional[str]) -> NoReturn:
+    """Log an error."""
+    cache = Cache(ctx)
+    cache.error(key, message, log_fn)
+    sys.exit(0)
+
+
+@click.command()
+@click.option("key", "-k", type=str, required=True, help="Specify key")
+@click.option("message", "-m", type=str, required=True, help="Specify message")
+@click.option(
+    "log_fn",
+    "-l",
+    type=str,
+    required=False,
+    help="Specify alternate log file",
+)
+@click.pass_context
+def warning(ctx: Context, key: str, message: str, log_fn: Optional[str]) -> NoReturn:
+    """Log a warning."""
+    cache = Cache(ctx)
+    cache.warning(key, message, log_fn)
+    sys.exit(0)
 
 
 @click.command()
@@ -42,7 +81,20 @@ def set_default_log(ctx: Context, log_fn: str) -> NoReturn:
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
-@click.option("-c", "--config", required=False, type=str, help="specify alternate config file")
+@click.option(
+    "-C",
+    "--cache",
+    required=False,
+    type=str,
+    help="specify alternate cache file",
+)
+@click.option(
+    "-c",
+    "--config",
+    required=False,
+    type=str,
+    help="specify alternate config file",
+)
 @click.option("-d", "--debug", count=True, default=0, help="increment debug level")
 @click.option("-t", "--test/--no-test", default=False, help="specify test mode")
 @click.option(
@@ -62,17 +114,26 @@ def set_default_log(ctx: Context, log_fn: str) -> NoReturn:
     help="show version and exit",
 )
 @click.pass_context
-def main(ctx, config, debug, test, verbose):
+def main(ctx, cache, config, debug, test, verbose):
     """Entry point for click script."""
-    if config is None:
-        config = str(Path.home() / ".config" / "dailylog")
     ctx.ensure_object(dict)
+    if cache is None:
+        path = Path.home() / ".cache"
+        ensure_directory(path)
+        cache = str(path / "dailylog.json")
+    if config is None:
+        path = Path.home() / ".config"
+        ensure_directory(path)
+        config = str(path / "dailylog.yaml")
     ctx.obj["debug"] = debug
     ctx.obj["test"] = test
     ctx.obj["verbose"] = verbose
+    ctx.obj["cache"] = cache
     ctx.obj["config"] = config
 
 
+main.add_command(error)
+main.add_command(warning)
 main.add_command(set_default_log)
 
 if __name__ == "__main__":

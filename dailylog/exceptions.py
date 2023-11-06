@@ -1,5 +1,5 @@
 """Top level module exceptions for dailylog."""
 
+
 class FilePermError(Exception):
-    ...
-    pass
+    """Class for file permission errors."""
