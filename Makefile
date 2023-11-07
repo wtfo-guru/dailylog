@@ -23,7 +23,7 @@ lint: mypy
 	poetry run doc8 -q docs
 
 unit:
-	poetry run pytest tests
+	poetry run pytest -s tests
 
 package:
 	poetry check
@@ -32,7 +32,7 @@ package:
 
 test: lint package unit
 
-build: test
+build:
 	poetry build
 	cp dist/$(PROJECT)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
 	sync-wheels

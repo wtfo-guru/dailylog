@@ -1009,6 +1009,17 @@ snowballstemmer = ">=2.2.0"
 toml = ["tomli (>=1.2.3)"]
 
 [[package]]
+name = "pyfakefs"
+version = "5.3.0"
+description = "pyfakefs implements a fake file system that mocks the Python file system modules."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pyfakefs-5.3.0-py3-none-any.whl", hash = "sha256:33c1f891078c727beec465e75cb314120635e2298456493cc2cc0539e2130cbb"},
+    {file = "pyfakefs-5.3.0.tar.gz", hash = "sha256:e3e35f65ce55ee8ecc5e243d55cfdbb5d0aa24938f6e04e19f0fab062f255020"},
+]
+
+[[package]]
 name = "pyflakes"
 version = "3.1.0"
 description = "passive checker of Python programs"
@@ -1087,6 +1098,23 @@ pytest = ">=4.6"
 
 [package.extras]
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtualenv"]
+
+[[package]]
+name = "pytest-print"
+version = "1.0.0"
+description = "pytest-print adds the printer fixture you can use to print messages to the user (directly to the pytest runner, not stdout)"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest_print-1.0.0-py3-none-any.whl", hash = "sha256:23484f42b906b87e31abd564761efffeb0348a6f83109fb857ee6e8e5df42b69"},
+    {file = "pytest_print-1.0.0.tar.gz", hash = "sha256:1fcde9945fba462227a8959271369b10bb7a193be8452162707e63cd60875ca0"},
+]
+
+[package.dependencies]
+pytest = ">=7.4"
+
+[package.extras]
+test = ["covdefaults (>=2.3)", "coverage (>=7.3)", "pytest-mock (>=3.11.1)"]
 
 [[package]]
 name = "pyyaml"
@@ -1195,6 +1223,7 @@ files = [
 [package.dependencies]
 markdown-it-py = ">=2.2.0"
 pygments = ">=2.13.0,<3.0.0"
+typing-extensions = {version = ">=4.0.0,<5.0", markers = "python_version < \"3.9\""}
 
 [package.extras]
 jupyter = ["ipywidgets (>=7.5.1,<9)"]
@@ -1366,6 +1395,17 @@ files = [
 ]
 
 [[package]]
+name = "types-pyyaml"
+version = "6.0.12.12"
+description = "Typing stubs for PyYAML"
+optional = false
+python-versions = "*"
+files = [
+    {file = "types-PyYAML-6.0.12.12.tar.gz", hash = "sha256:334373d392fde0fdf95af5c3f1661885fa10c52167b14593eb856289e1855062"},
+    {file = "types_PyYAML-6.0.12.12-py3-none-any.whl", hash = "sha256:c05bc6c158facb0676674b7f11fe3960db4f389718e19e62bd2b84d6205cfd24"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.8.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1427,6 +1467,20 @@ setuptools = "*"
 typing_extensions = ">=4.0,<5.0"
 
 [[package]]
+name = "wheel"
+version = "0.41.3"
+description = "A built-package format for Python"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "wheel-0.41.3-py3-none-any.whl", hash = "sha256:488609bc63a29322326e05560731bf7bfea8e48ad646e1f5e40d366607de0942"},
+    {file = "wheel-0.41.3.tar.gz", hash = "sha256:4d4987ce51a49370ea65c0bfd2234e8ce80a12780820d9dc462597a6e60d0841"},
+]
+
+[package.extras]
+test = ["pytest (>=6.0.0)", "setuptools (>=65)"]
+
+[[package]]
 name = "win32-setctime"
 version = "1.1.0"
 description = "A small Python utility to set file creation time on Windows"
@@ -1440,7 +1494,24 @@ files = [
 [package.extras]
 dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 
+[[package]]
+name = "wtforglib"
+version = "0.8.3"
+description = "A set of utility functions I use in my various python projects."
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "wtforglib-0.8.3-py3-none-any.whl", hash = "sha256:0200a85b470681d67160a9cb5bdcc0615ae0d6f933a881f08975f592a1f71308"},
+    {file = "wtforglib-0.8.3.tar.gz", hash = "sha256:081d8dacd5b125fddc67bbd0eb93c80fbf877bb13981432fe952503d2528f922"},
+]
+
+[package.dependencies]
+jinja2 = ">=3.1.2,<4.0.0"
+pyyaml = ">=6.0,<7.0"
+types-pyyaml = ">=6.0.12,<7.0.0"
+wheel = ">=0.37.1"
+
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.10"
-content-hash = "feef23616576759071532b87ed7ebfee95086d59e0a364f6f7a1bc4dca35a430"
+python-versions = ">=3.8.1,<4.0"
+content-hash = "76ffb72a7700a00aad4b53208a2eb483a8a20f573fce07ac2340cab0882f1bec"
