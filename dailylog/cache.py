@@ -88,7 +88,7 @@ class Cache(Config):
         self._load_cache()
 
     def log_message(self, key: str, message: str, **kwargs) -> None:
-        """Log message.
+        r"""Log message.
 
         Parameters
         ----------
@@ -96,7 +96,7 @@ class Cache(Config):
             unique key for message
         message : str
             the message to log
-        **kwargs : dict, optional
+        \*\*kwargs : dict, optional
             label: str
                 Should be one of CRITICAL, ERROR, WARNING, INFO, DEBUG
             suppress: int
