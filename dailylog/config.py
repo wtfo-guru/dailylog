@@ -14,7 +14,9 @@ from dailylog.options import Options
 CURRENT_CONFIG_VERSION = 1
 CONST_DEFAULT_LOG = str(Path.home() / "daily.log")
 
-class Config(Options):
+
+# WPS214 Found too many methods
+class Config(Options):  # noqa: WPS214
     """Class to manage the configuration."""
 
     config: StrAnyDict
@@ -73,6 +75,16 @@ class Config(Options):
         elif not os.access(path.parent, os.W_OK):
             raise FilePermError("Not writable: {0}".format(path.parent))
 
+    def default_log(self) -> str:
+        """Returns the path to the default log.
+
+        Returns
+        -------
+        str
+            Path to the default log
+        """
+        return self.config.get("default_log", CONST_DEFAULT_LOG)
+
     @staticmethod
     def validate_existing_path(path: Path) -> None:
         """Validate existing path.
@@ -102,6 +114,3 @@ class Config(Options):
         if self.is_debug():
             click.echo("Saving configuration to file: {0}".format(self.config_path()))
         write_yaml_file(self.config_path(), self.config)
-
-    def _default_log(self) -> str:
-        return self.config.get("default_log", CONST_DEFAULT_LOG)

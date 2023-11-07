@@ -5,10 +5,10 @@
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
-            "module": "__PROJECY__.cli",
+            "module": "dailylog.cli",
             "justMyCode": true,
             "console": "integratedTerminal",
-            "args": ["hello"]
+            "args": ["--version"]
         }
     ]
 }

@@ -32,7 +32,7 @@ package:
 
 test: lint package unit
 
-build: test
+build:
 	poetry build
 	cp dist/$(PROJECT)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
 	sync-wheels

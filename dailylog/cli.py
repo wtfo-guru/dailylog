@@ -1,8 +1,9 @@
 """Top-level module cli for dailylog."""
 
+import logging
 import sys
-import types
 from pathlib import Path
+from types import MappingProxyType
 from typing import AnyStr, NoReturn, Optional
 
 import click
@@ -13,7 +14,37 @@ from dailylog.cache import CONST_HOUR, Cache
 from dailylog.config import Config
 from dailylog.version import VERSION
 
-CONTEXT_SETTINGS = types.MappingProxyType({"help_option_names": ["-h", "--help"]})
+CONTEXT_SETTINGS = MappingProxyType({"help_option_names": ["-h", "--help"]})
+LOG_LEVELS = MappingProxyType(
+    {
+        "CRITICAL": logging.CRITICAL,
+        "ERROR": logging.ERROR,
+        "WARNING": logging.WARNING,
+        "INFO": logging.INFO,
+        "DEBUG": logging.DEBUG,
+    },
+)
+
+
+def log_level_name(level: int, default: str = "info") -> str:
+    """Return logger level name.
+
+    Parameters
+    ----------
+    level : int
+        Level number
+    default : str, optional
+        Default if not matched, by default "info"
+
+    Returns
+    -------
+    str
+        Level name
+    """
+    for key, valor in LOG_LEVELS.items():
+        if level == valor:
+            return key
+    return default
 
 
 def print_version(ctx: Context, _aparam: AnyStr, avalue: AnyStr) -> None:
@@ -38,45 +69,44 @@ def print_version(ctx: Context, _aparam: AnyStr, avalue: AnyStr) -> None:
 @click.option("key", "-k", type=str, required=True, help="Specify key")
 @click.option("message", "-m", type=str, required=True, help="Specify message")
 @click.option(
-    "log_fn",
-    "-l",
-    type=str,
-    required=False,
-    help="Specify alternate log file",
-)
-@click.pass_context
-def error(ctx: Context, key: str, message: str, log_fn: Optional[str]) -> NoReturn:
-    """Log an error."""
-    cache = Cache(ctx)
-    cache.error(key, message, log_fn)
-    sys.exit(0)
-
-
-@click.command()
-@click.option("key", "-k", type=str, required=True, help="Specify key")
-@click.option("message", "-m", type=str, required=True, help="Specify message")
-@click.option(
     "suppress",
     "-s",
-    type=int,
     default=CONST_HOUR,
     help="Specify seconds to suppress (default 86400 [one day])",
 )
 @click.option(
-    "log_fn",
+    "level",
     "-l",
+    default=logging.ERROR,
+    help="Specify one of logging levels (default: logging.ERROR)",
+)
+@click.option(
+    "log_fn",
+    "-f",
     type=str,
     required=False,
     help="Specify alternate log file",
 )
 @click.pass_context
-def warning(ctx: Context, key: str, message: str, suppress: int, log_fn: Optional[str]) -> NoReturn:
-    """Log a warning."""
+def log(
+    ctx: Context,
+    key: str,
+    message: str,
+    suppress: int,
+    level: int,
+    log_fn: Optional[str],
+) -> NoReturn:
+    """Log an error."""
     cache = Cache(ctx)
     if log_fn is None:
-        cache.log(key, message, label="WARNING", suppress=suppress)
-    else:
-        cache.log(key, message, label="WARNING", suppress=suppress)
+        log_fn = cache.default_log()
+    cache.log_message(
+        key,
+        message,
+        label=log_level_name(level, "ERROR"),
+        suppress=suppress,
+        logfn=log_fn,
+    )
     sys.exit(0)
 
 
@@ -99,14 +129,14 @@ def set_default_log(ctx: Context, log_fn: str) -> NoReturn:
     "--cache",
     required=False,
     type=str,
-    help="specify alternate cache file",
+    help="specify alternate cache file (default ~/.cache/dailylog.json)",
 )
 @click.option(
     "-c",
     "--config",
     required=False,
     type=str,
-    help="specify alternate config file",
+    help="specify alternate config file (default ~/.config/dailylog.yaml)",
 )
 @click.option("-d", "--debug", count=True, default=0, help="increment debug level")
 @click.option("-t", "--test/--no-test", default=False, help="specify test mode")
@@ -145,8 +175,7 @@ def main(ctx, cache, config, debug, test, verbose):
     ctx.obj["config"] = config
 
 
-main.add_command(error)
-main.add_command(warning)
+main.add_command(log)
 main.add_command(set_default_log)
 
 if __name__ == "__main__":

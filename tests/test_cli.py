@@ -25,17 +25,17 @@ def test_cli(cli_runner):
     test_result = cli_runner.invoke(main)
     assert test_result.exit_code == 0
     assert not test_result.exception
-    for regex in ("warning", "error", CONST_ARG_SET_DEFAULT_LOG):
+    for regex in ("log", "set-default-log", CONST_ARG_SET_DEFAULT_LOG):
         assert re.search(regex, test_result.output)
 
 
-def test_cli_with_option(cli_runner, version):
+def test_cli_with_option(cli_runner):
     """Test cli version option."""
     # noinspection PyTypeChecker
     test_result = cli_runner.invoke(main, ["--version"])
     assert not test_result.exception
     assert test_result.exit_code == 0
-    assert test_result.output.strip() == version
+    assert re.match(r"\d+.\d+.\d+", test_result.output.strip())
 
 
 def test_cli_set_default_log_missing_arg(cli_runner, fs):

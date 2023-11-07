@@ -1,15 +1,36 @@
 [tool.poetry]
 name = "dailylog"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Quien Sabe <qs5779@mail.com>"]
 readme = "README.md"
+
+# homepage = "https://github.com/wtfo-guru/wtforglib"
+# documentation = "https://wtforglib.readthedocs.io/en/stable"
+
+keywords = ["logging"]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+  "Typing :: Typed",
+]
+
+packages = [
+    { include = "dailylog" },
+    { include = "dailylog/py.typed" },
+]
 
 [tool.poetry.scripts]
 dailylog = "dailylog.cli:main"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.8.1,<4.0"
 click = "^8.1.7"
 loguru = "^0.7.2"
 wtforglib = "^0.8.3"
@@ -25,6 +46,7 @@ doc8 = "^1.1.1"
 safety = "^2.3.5"
 pytest-cov = "^4.1.0"
 pytest-click = "^1.1.0"
+pytest-print = "^1.0.0"
 
 
 [tool.poetry.group.tests.dependencies]
