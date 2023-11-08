@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dailylog"
-version = "0.1.4-dev0"
+version = "0.1.2"
 description = ""
 authors = ["Quien Sabe <qs5779@mail.com>"]
 readme = "README.md"
