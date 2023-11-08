@@ -18,7 +18,7 @@ Check out this repo and cd into the project directory and run:
 
 ```bash
 
-pip install dailylog
+pip install dailylog1
 
 ```
 
