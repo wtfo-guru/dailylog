@@ -8,7 +8,7 @@ from click.core import Context
 from wtforglib.files import load_json_file, write_json_file
 from wtforglib.kinds import StrAnyDict
 
-from dailylog.config import Config
+from dailylog1.config import Config
 
 CONST_CACHE_VERSION = 1
 CONST_HOUR = 86400

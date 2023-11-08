@@ -1,6 +1,6 @@
 SHELL:=/usr/bin/env bash
 
-PROJECT = dailylog
+PROJECT = dailylog1
 PROJECT_PATH ?= $(shell git rev-parse --show-toplevel)
 PROJECT_VERSION ?= $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'} | tr '-' '.')
 WHEELS=/home/jim/kbfs/private/jim5779/wheels
@@ -37,11 +37,11 @@ build: test
 	cp dist/$(PROJECT)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
 	sync-wheels
 
-# publish: build
-# 	poetry publish
+publish: build
+	poetry publish
 
-# publish-test: test build
-# 	poetry publish -r test-pypi
+publish-test: test build
+	poetry publish -r test-pypi
 
 chlog:
 	auto-changelog

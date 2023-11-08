@@ -10,9 +10,9 @@ import click
 from click.core import Context
 from wtforglib.files import ensure_directory
 
-from dailylog.cache import CONST_HOUR, Cache
-from dailylog.config import Config
-from dailylog.version import VERSION
+from dailylog1.cache import CONST_HOUR, Cache
+from dailylog1.config import Config
+from dailylog1.version import VERSION
 
 CONTEXT_SETTINGS = MappingProxyType({"help_option_names": ["-h", "--help"]})
 LOG_LEVELS = MappingProxyType(
@@ -96,7 +96,7 @@ def log(
     level: int,
     log_fn: Optional[str],
 ) -> NoReturn:
-    """Log an error."""
+    """Log a message."""
     cache = Cache(ctx)
     if log_fn is None:
         log_fn = cache.default_log()

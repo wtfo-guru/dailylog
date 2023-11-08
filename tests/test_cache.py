@@ -4,8 +4,8 @@ import time
 
 from wtforglib.files import load_json_file
 
-from dailylog.cache import CONST_CACHE_VERSION
-from dailylog.cli import main
+from dailylog1.cache import CONST_CACHE_VERSION
+from dailylog1.cli import main
 
 # CONST_ARG_SET_DEFAULT_LOG = "set-default-log"
 # CONST_OPT_LOWER_C = "-c"

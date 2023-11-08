@@ -1,6 +1,6 @@
 # dailylog
 
-[![Build Status](https://github.com/wtfo-guru/dailylog/workflows/Wtforglib/badge.svg?branch=main&event=push)](https://github.com/wtfo-guru/dailylog/actions?query=workflow%3AWtforglib)
+[![Build Status](https://github.com/wtfo-guru/dailylog/workflows/Wtforglib/badge.svg?branch=main&event=push)](https://github.com/wtfo-guru/dailylog/actions?query=workflow%3ADailylog-linux)
 [![codecov](https://codecov.io/gh/wtfo-guru/dailylog/branch/main/graph/badge.svg)](https://codecov.io/gh/wtfo-guru/dailylog)
 [![Python Version](https://img.shields.io/pypi/pyversions/dailylog.svg)](https://pypi.org/project/dailylog/)
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
@@ -12,14 +12,13 @@ one of the scripts that runs frequently starts failing. Rather than waking to a 
 mailbox, using this tool will throttled specific errors to a log and only show the error
 every 24 hours by default. The time can be adjusted by passing a parameter.
 
-
-
 ## Installation
 
 Check out this repo and cd into the project directory and run:
+
 ```bash
-make build
-pip install --user
+
+pip install dailylog1
 
 ```
 
@@ -49,7 +48,7 @@ Commands:
 dailylog log --help
 Usage: dailylog log [OPTIONS]
 
-  Log an error.
+  Log a message.
 
 Options:
   -k TEXT     Specify key  [required]
@@ -72,7 +71,9 @@ Options:
 
 ## Documentation
 
-Their will be documentation when available on pypi.org
+- [Stable](https://dailylog1.readthedocs.io/en/stable)
+
+- [Latest](https://dailylog1.readthedocs.io/en/latest)
 
 ## License
 

@@ -1,22 +1,22 @@
 :orphan:
 
-.. automodule:: dailylog
+.. automodule:: dailylog1
     :members:
 
-.. automodule:: dailylog.cache
+.. automodule:: dailylog1.cache
     :members:
 
-.. automodule:: dailylog.cli
+.. automodule:: dailylog1.cli
     :members:
 
-.. automodule:: dailylog.config
+.. automodule:: dailylog1.config
     :members:
 
-.. automodule:: dailylog.options
+.. automodule:: dailylog1.options
     :members:
 
-.. automodule:: dailylog.version
+.. automodule:: dailylog1.version
     :members:
 
-.. automodule:: dailylog.exceptions
+.. automodule:: dailylog1.exceptions
     :members:

@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "dailylog"
-version = "0.1.4-dev0"
+name = "dailylog1"
+version = "0.1.2"
 description = ""
 authors = ["Quien Sabe <qs5779@mail.com>"]
 readme = "README.md"
@@ -22,8 +22,8 @@ classifiers = [
 ]
 
 packages = [
-    { include = "dailylog" },
-    { include = "dailylog/py.typed" },
+    { include = "dailylog1" },
+    { include = "dailylog1/py.typed" },
 ]
 
 [tool.poetry.scripts]
