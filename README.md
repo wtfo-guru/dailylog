@@ -1,6 +1,6 @@
 # dailylog
 
-[![Build Status](https://github.com/wtfo-guru/dailylog/workflows/Dailylog/badge.svg?branch=main&event=push)](https://github.com/wtfo-guru/dailylog/actions?query=workflow%3ADailyloglinux)
+[![Build Status](https://github.com/wtfo-guru/dailylog/workflows/Dailyloglinux/badge.svg?branch=main&event=push)](https://github.com/wtfo-guru/dailylog/actions?query=workflow%3ADailyloglinux)
 [![codecov](https://codecov.io/gh/wtfo-guru/dailylog/branch/main/graph/badge.svg)](https://codecov.io/gh/wtfo-guru/dailylog)
 [![Python Version](https://img.shields.io/pypi/pyversions/dailylog.svg)](https://pypi.org/project/dailylog/)
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
