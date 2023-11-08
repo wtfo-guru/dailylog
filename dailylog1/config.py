@@ -8,8 +8,8 @@ from click.core import Context
 from wtforglib.files import load_yaml_file, write_yaml_file
 from wtforglib.kinds import StrAnyDict
 
-from dailylog.exceptions import FilePermError
-from dailylog.options import Options
+from dailylog1.exceptions import FilePermError
+from dailylog1.options import Options
 
 CURRENT_CONFIG_VERSION = 1
 CONST_DEFAULT_LOG = str(Path.home() / "daily.log")

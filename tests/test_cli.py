@@ -3,8 +3,8 @@ import re
 
 import yaml
 
-from dailylog.cli import main
-from dailylog.config import CURRENT_CONFIG_VERSION
+from dailylog1.cli import main
+from dailylog1.config import CURRENT_CONFIG_VERSION
 
 CONST_ARG_SET_DEFAULT_LOG = "set-default-log"
 CONST_OPT_LOWER_C = "-c"
