@@ -5,7 +5,7 @@
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
-            "module": "dailylog.cli",
+            "module": "dailylog1.cli",
             "justMyCode": true,
             "console": "integratedTerminal",
             "args": ["--version"]
