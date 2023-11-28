@@ -1,6 +1,6 @@
 SHELL:=/usr/bin/env bash
 
-PROJECT = dailylog
+PROJECT = dailylog1
 PROJECT_PATH ?= $(shell git rev-parse --show-toplevel)
 PROJECT_VERSION ?= $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'} | tr '-' '.')
 WHEELS=/home/jim/kbfs/private/jim5779/wheels

@@ -2,13 +2,11 @@
 
 import logging
 import sys
-from pathlib import Path
 from types import MappingProxyType
 from typing import AnyStr, NoReturn, Optional
 
 import click
 from click.core import Context
-from wtforglib.files import ensure_directory
 
 from dailylog1.cache import CONST_HOUR, Cache
 from dailylog1.config import Config
@@ -161,13 +159,9 @@ def main(ctx, cache, config, debug, test, verbose):
     """Entry point for click script."""
     ctx.ensure_object(dict)
     if cache is None:
-        path = Path.home() / ".cache"
-        ensure_directory(path)
-        cache = str(path / "dailylog.json")
+        cache = ""
     if config is None:
-        path = Path.home() / ".config"
-        ensure_directory(path)
-        config = str(path / "dailylog.yaml")
+        config = ""
     ctx.obj["debug"] = debug
     ctx.obj["test"] = test
     ctx.obj["verbose"] = verbose
