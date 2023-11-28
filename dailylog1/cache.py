@@ -87,7 +87,7 @@ class Cache(Config):
         super().__init__(ctx)
         self._load_cache()
 
-    def log_message(self, key: str, message: str, **kwargs) -> None:
+    def log_message(self, key: str, message: str, **kwargs) -> bool:
         r"""Log message.
 
         Parameters
@@ -103,11 +103,17 @@ class Cache(Config):
                 Integer representing number of seconds to suppress screen output
             logfn: str
                 this is a string representing a log file other than the default
+
+        Returns
+        -------
+        bool
+            True if record was was displayed
         """
         # default values
         label = "ERROR"
         log_fn = self.default_log()
         stifle = CONST_HOUR
+        rtn_val = False
         if kwargs is not None:
             label = kwargs.get("label", label)
             log_fn = kwargs.get("logfn", log_fn)
@@ -115,9 +121,11 @@ class Cache(Config):
         record: CacheRecord = self._get_record(key)
         if not record.suppress(stifle):
             sys.stderr.write("{0}: {1}\n".format(label, message))
+            rtn_val = True
         Cache.append_daily(label, message, log_fn, record.suppressed)
         self.cache["entries"][key] = record.to_dict()
         self._save_cache()
+        return rtn_val
 
     @staticmethod
     def append_daily(

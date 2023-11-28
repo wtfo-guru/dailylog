@@ -33,6 +33,7 @@ package:
 test: lint package unit
 
 build: test
+	manage-tag.sh -u v$(PROJECT_VERSION)
 	poetry build
 	cp dist/$(PROJECT)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
 	sync-wheels
