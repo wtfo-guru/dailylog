@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from click.core import Context
+from wtforglib.files import ensure_directory
 
 
 class Options(object):
@@ -30,9 +31,17 @@ class Options(object):
 
         key = "cache"
         fn = str(ctx.obj.get(key, ""))
+        if not fn:
+            path = Path.home() / ".cache"
+            ensure_directory(path)
+            fn = str(path / "dailylog.json")
         self.cache_fn = Options.validate_fn_absolute(key, fn)
         key = "config"
         fn = str(ctx.obj.get(key, ""))
+        if not fn:
+            path = Path.home() / ".config"
+            ensure_directory(path)
+            fn = str(path / "dailylog.yaml")
         self.config_fn = Options.validate_fn_absolute(key, fn)
 
     def is_debug(self) -> bool:
