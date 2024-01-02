@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dailylog1"
-version = "0.1.6-dev1"
+version = "0.1.6-dev2"
 description = ""
 authors = ["Quien Sabe <qs5779@mail.com>"]
 readme = "README.md"
@@ -38,9 +38,9 @@ tomli = "^2.0.1"
 
 
 [tool.poetry.group.test.dependencies]
-isort = "^5.12.0"
-black = "^23.10.1"
-mypy = "^1.6.1"
+isort = "^5.13"
+black = "^23.12"
+mypy = "^1.8"
 wemake-python-styleguide = "^0.18.0"
 flake8-pytest-style = "^1.7.2"
 doc8 = "^1.1.1"
