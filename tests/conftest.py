@@ -1,4 +1,5 @@
 """Test level module test_cli for dailylog."""
+
 # from pathlib import Path
 
 # import pytest
