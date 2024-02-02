@@ -39,7 +39,7 @@ tomli = "^2.0.1"
 
 [tool.poetry.group.test.dependencies]
 isort = "^5.13"
-black = "^23.12"
+black = ">=23.12,<25.0"
 mypy = "^1.8"
 wemake-python-styleguide = "^0.18.0"
 flake8-pytest-style = "^1.7.2"
