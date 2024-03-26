@@ -6,7 +6,7 @@ from click.core import Context
 from wtforglib.files import ensure_directory
 
 
-class Options(object):
+class Options:
     """Class to manage the options."""
 
     debug: int
