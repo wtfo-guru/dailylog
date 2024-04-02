@@ -6,6 +6,11 @@ PROJECT_VERSION ?= $(shell grep ^current_version .bumpversion.cfg | awk '{print 
 WHEELS=/home/jim/kbfs/private/jim5779/wheels
 
 .PHONY: black mypy lint unit package test publish publish-test vars build chlog
+
+.PHONY: update
+update:
+	poetry update --with test --with docs
+
 vars:
 	@echo "PROJECT: $(PROJECT)"
 	@echo "PROJECT_VERSION: $(PROJECT_VERSION)"

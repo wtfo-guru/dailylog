@@ -14,7 +14,7 @@ CONST_CACHE_VERSION = 1
 CONST_HOUR = 86400
 
 
-class CacheRecord(object):
+class CacheRecord:
     """Class representing a cache record."""
 
     shown: int

@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.9', '3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
       run: poetry run pip --version >/dev/null 2>&1 || rm -rf .venv
 
     - name: Install dependencies
-      run: poetry install --no-interaction
+      run: poetry install --no-interaction  --with test
 
     - name: Run checks
       run: make test

@@ -41,7 +41,7 @@ jobs:
     - name: Install dependencies
       run: |
         poetry run pip install -U pip
-        poetry install
+        poetry install --with test
 
     # - name: Run mypy
     #   run: poetry run mypy wtforglib tests/**/*.py
