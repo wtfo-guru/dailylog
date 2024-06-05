@@ -1,26 +1,30 @@
 SHELL:=/usr/bin/env bash
 
 PROJECT_NAME ?= $(shell basename $$(git rev-parse --show-toplevel) | sed -e "s/^python-//")
-PACKAGE_DIR ?= dailylog1
+PACKAGE_DIR ?= $(shell echo $(PROJECT_NAME) | tr "-" "_")
 PROJECT_VERSION ?= $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'} | tr '-' '.')
 WHEELS ?= /home/jim/kbfs/private/jim5779/wheels
 TEST_MASK = tests
 GITHUB_ORG ?= wtf-guru
 
-.PHONY: vars black mypy lint sunit unit package test publish publish-test update
+.PHONY: lint sunit unit test publish publish-test
 
+.PHONY: update
 update:
 	poetry update --with test --with docs
 
+.PHONY: vars
 vars:
 	@echo "PROJECT_NAME: $(PROJECT_NAME)"
 	@echo "PACKAGE_DIR: $(PACKAGE_DIR)"
 	@echo "PROJECT_VERSION: $(PROJECT_VERSION)"
 
+.PHONY: black
 black:
 	poetry run isort $(PACKAGE_DIR) $(TEST_MASK)
 	poetry run black $(PACKAGE_DIR) $(TEST_MASK)
 
+.PHONY: mypy
 mypy: black
 	poetry run mypy $(PACKAGE_DIR) $(TEST_MASK)
 
@@ -34,9 +38,14 @@ sunit:
 unit:
 	poetry run pytest tests
 
+.PHONY: package
 package:
 	poetry check
 	poetry run pip check
+	poetry run safety check --full-report
+
+.PHONY: safety
+safety:
 	poetry run safety check --full-report
 
 test: lint package unit
