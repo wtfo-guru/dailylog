@@ -36,7 +36,7 @@ def test_cli_with_option(cli_runner):
     test_result = cli_runner.invoke(main, ["--version"])
     assert not test_result.exception
     assert test_result.exit_code == 0
-    assert re.match(r"\d+.\d+.\d+", test_result.output.strip())
+    assert re.search(r"version \d+.\d+.\d+", test_result.output.strip())
 
 
 def test_cli_set_default_log_missing_arg(cli_runner, fs):

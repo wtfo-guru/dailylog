@@ -10,7 +10,7 @@ from click.core import Context
 
 from dailylog1.cache import CONST_HOUR, Cache
 from dailylog1.config import Config
-from dailylog1.version import VERSION
+from dailylog1.constants import VERSION
 
 CONTEXT_SETTINGS = MappingProxyType({"help_option_names": ["-h", "--help"]})
 LOG_LEVELS = MappingProxyType(
@@ -145,15 +145,7 @@ def set_default_log(ctx: Context, log_fn: str) -> NoReturn:
     default=0,
     help="increment verbosity level",
 )
-@click.option(
-    "-V",
-    "--version",
-    is_flag=True,
-    expose_value=False,
-    callback=print_version,
-    is_eager=True,
-    help="show version and exit",
-)
+@click.version_option(VERSION)
 @click.pass_context
 def main(ctx, cache, config, debug, test, verbose):
     """Entry point for click script."""
