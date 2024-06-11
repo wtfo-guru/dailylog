@@ -35,7 +35,7 @@ class CacheRecord:
         self._from_dict(d_obj)
 
     def suppress(self, stifle: int) -> bool:
-        """Suppress diplay of cache record.
+        """Suppress display of cache record.
 
         Parameters
         ----------
