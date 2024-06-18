@@ -24,25 +24,30 @@ LOG_LEVELS = MappingProxyType(
 )
 
 
-def log_level_name(level: int, default: str = "info") -> str:
+def log_label(level: str) -> str:
     """Return logger level name.
 
     Parameters
     ----------
-    level : int
-        Level number
-    default : str, optional
-        Default if not matched, by default "info"
+    level : str
+        Level number or name
 
     Returns
     -------
     str
-        Level name
+        Level name, Default if not matched, by default "ERROR"
     """
-    for key, valor in LOG_LEVELS.items():
-        if level == valor:
-            return key
-    return default
+    if level.isdigit():
+        i_level = int(level)
+        for key, valor in LOG_LEVELS.items():
+            if i_level == valor:
+                return key
+    else:
+        u_level = level.upper()
+        if u_level in LOG_LEVELS:
+            return u_level
+
+    return "ERROR"
 
 
 def print_version(ctx: Context, _aparam: AnyStr, avalue: AnyStr) -> None:
@@ -75,8 +80,8 @@ def print_version(ctx: Context, _aparam: AnyStr, avalue: AnyStr) -> None:
 @click.option(
     "level",
     "-l",
-    default=logging.ERROR,
-    help="Specify one of logging levels (default: logging.ERROR)",
+    default="ERROR",
+    help="Specify one of CRITICAL, ERROR, WARNING, INFO, DEBUG (default: ERROR)",
 )
 @click.option(
     "log_fn",
@@ -91,7 +96,7 @@ def log(
     key: str,
     message: str,
     suppress: int,
-    level: int,
+    level: str,
     log_fn: Optional[str],
 ) -> NoReturn:
     """Log a message."""
@@ -101,7 +106,7 @@ def log(
     cache.log_message(
         key,
         message,
-        label=log_level_name(level, "ERROR"),
+        label=log_label(level),
         suppress=suppress,
         logfn=log_fn,
     )

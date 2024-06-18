@@ -12,4 +12,7 @@ security: # configuration for the `safety check` command
         70612: # jinja2
             reason: we do not use the vulnerable function
             expires: '2024-08-02'
+        62044: # pip
+            reason: pip is not in the project
+            expires: '2024-11-02'
     continue-on-vulnerability-error: False # Suppress non-zero exit codes when vulnerabilities are found. Enable this in pipelines and CI/CD processes if you want to pass builds that have vulnerabilities
