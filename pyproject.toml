@@ -33,7 +33,7 @@ dailylog = "dailylog1.cli:main"
 python = ">=3.9,<4.0"
 click = "^8.1.0"
 loguru = "^0.7.2"
-wtforglib = "^0.8"
+wtforglib = "^1.0"
 tomli = "^2.0.1"
 
 [tool.poetry.group.test]
