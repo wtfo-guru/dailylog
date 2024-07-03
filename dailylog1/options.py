@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from click.core import Context
-from wtforglib.files import ensure_directory
+from wtforglib.dirs import ensure_directory
 
 
 class Options:
