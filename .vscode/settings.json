@@ -12,8 +12,5 @@
         "avalue",
         "dailylog",
         "logfn"
-    ],
-    "markdownlint.config": {
-        "MD024": false,
-    }
+    ]
 }
