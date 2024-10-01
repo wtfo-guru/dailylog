@@ -1521,20 +1521,20 @@ testing = ["fields", "hunter", "process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "pytest-print"
-version = "1.0.0"
+version = "1.0.2"
 description = "pytest-print adds the printer fixture you can use to print messages to the user (directly to the pytest runner, not stdout)"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest_print-1.0.0-py3-none-any.whl", hash = "sha256:23484f42b906b87e31abd564761efffeb0348a6f83109fb857ee6e8e5df42b69"},
-    {file = "pytest_print-1.0.0.tar.gz", hash = "sha256:1fcde9945fba462227a8959271369b10bb7a193be8452162707e63cd60875ca0"},
+    {file = "pytest_print-1.0.2-py3-none-any.whl", hash = "sha256:3ae7891085dddc3cd697bd6956787240107fe76d6b5cdcfcd782e33ca6543de9"},
+    {file = "pytest_print-1.0.2.tar.gz", hash = "sha256:2780350a7bbe7117f99c5d708dc7b0431beceda021b1fd3f11200670d7f33679"},
 ]
 
 [package.dependencies]
-pytest = ">=7.4"
+pytest = ">=8.3.2"
 
 [package.extras]
-test = ["covdefaults (>=2.3)", "coverage (>=7.3)", "pytest-mock (>=3.11.1)"]
+test = ["covdefaults (>=2.3)", "coverage (>=7.6.1)", "pytest-mock (>=3.14)"]
 
 [[package]]
 name = "pyyaml"
@@ -2137,4 +2137,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "96d6287309378d61244ff294ad11917d97256f294519c0f02da3ef632ad7453c"
+content-hash = "7200ffc3717a09adc24dece31d2e3887d67090cd9bcf60b9c897e05af377d115"

@@ -50,7 +50,7 @@ safety = ">=2.3.5,<4.0.0"
 pytest = ">=7.4,<9.0"
 pytest-cov = ">=4,<6"
 pytest-click = "^1.1.0"
-pytest-print = "^1.0.0"
+pytest-print = "^1.0.2"
 pyfakefs = "^5.3.0"
 pip = "^24.0"
 
