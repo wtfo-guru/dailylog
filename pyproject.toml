@@ -34,7 +34,7 @@ python = ">=3.9,<4.0"
 click = "^8.1.0"
 loguru = "^0.7.2"
 wtforglib = "^1.0.0"
-tomli = "^2.0.1"
+tomli = "^2.2.1"
 
 [tool.poetry.group.test]
 optional = true
