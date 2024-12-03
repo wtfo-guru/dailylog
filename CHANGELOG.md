@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- tomli (2.0.2 -> 2.2.1)
 - certifi (2024.6.2 -> 2024.7.4)
 - pydantic-core (2.20.0 -> 2.20.1)
 - cryptography (42.0.8 -> 43.0.0)
