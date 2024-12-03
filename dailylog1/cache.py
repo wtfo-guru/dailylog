@@ -47,7 +47,7 @@ class CacheRecord:
         bool
             True if suppressed
         """
-        now = int(datetime.utcnow().timestamp())
+        now = int(datetime.now(timezone.utc).timestamp())
         if now - self.shown > stifle:
             self.shown = now
             self.suppressed = 0
