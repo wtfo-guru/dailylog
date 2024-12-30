@@ -1,3 +1,3 @@
 """Top level module constants for dailylog."""
 
-VERSION = "0.2.1-dev4"
+VERSION = "0.2.1-dev5"
