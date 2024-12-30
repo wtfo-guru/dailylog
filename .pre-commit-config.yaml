@@ -3,7 +3,7 @@
 ---
 exclude: '^attic/$|^docs/conf.py|^.vscode/'
 default_install_hook_types: ["pre-commit", "commit-msg"]
-default_stages: ["commit"]
+default_stages: ["pre-commit"]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -44,7 +44,7 @@ repos:
         additional_dependencies: [wemake-python-styleguide >= 0.19.2]
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.0.0
+    rev: v4.1.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
