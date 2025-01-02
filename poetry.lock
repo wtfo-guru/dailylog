@@ -825,6 +825,7 @@ files = [
 ]
 
 [[package]]
+name = "mypy"
 version = "1.14.1"
 description = "Optional static typing for Python"
 optional = false
