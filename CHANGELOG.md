@@ -8,13 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- tomli (2.0.2 -> 2.2.1)
-- certifi (2024.6.2 -> 2024.7.4)
-- pydantic-core (2.20.0 -> 2.20.1)
-- cryptography (42.0.8 -> 43.0.0)
-- exceptiongroup (1.2.1 -> 1.2.2)
-- pydantic (2.8.0 -> 2.8.2)
-- wtforglib (1.0.1 -> 1.0.2)
+## [0.2.0] - 2024-07-03
+
+- Added quiet option to log command
 
 ## [0.2.0] - 2024-07-03
 

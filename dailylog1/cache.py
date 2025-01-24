@@ -11,7 +11,7 @@ from wtforglib.kinds import StrAnyDict
 from dailylog1.config import Config
 
 CONST_CACHE_VERSION = 1
-CONST_HOUR = 86400
+CONST_DAY = 86400
 
 
 class CacheRecord:
@@ -112,19 +112,21 @@ class Cache(Config):
         # default values
         label = "ERROR"
         log_fn = self.default_log()
-        stifle = CONST_HOUR
         rtn_val = False
         if kwargs is not None:
             label = kwargs.get("label", label)
             log_fn = kwargs.get("logfn", log_fn)
-            stifle = kwargs.get("suppress", stifle)
-        record: CacheRecord = self._get_record(key)
-        if not record.suppress(stifle):
-            sys.stderr.write("{0}: {1}\n".format(label, message))
+        if kwargs.get("quiet", False):
+            Cache.append_daily(label, message, log_fn)
             rtn_val = True
-        Cache.append_daily(label, message, log_fn, record.suppressed)
-        self.cache["entries"][key] = record.to_dict()
-        self._save_cache()
+        else:
+            record: CacheRecord = self._get_record(key)
+            if not record.suppress(kwargs.get("suppress", CONST_DAY)):
+                sys.stderr.write("{0}: {1}\n".format(label, message))
+                rtn_val = True
+            Cache.append_daily(label, message, log_fn, record.suppressed)
+            self.cache["entries"][key] = record.to_dict()
+            self._save_cache()
         return rtn_val
 
     @staticmethod

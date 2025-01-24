@@ -3,12 +3,12 @@
 import logging
 import sys
 from types import MappingProxyType
-from typing import AnyStr, NoReturn, Optional
+from typing import NoReturn, Optional
 
 import click
 from click.core import Context
 
-from dailylog1.cache import CONST_HOUR, Cache
+from dailylog1.cache import CONST_DAY, Cache
 from dailylog1.config import Config
 from dailylog1.constants import VERSION
 
@@ -50,41 +50,24 @@ def log_label(level: str) -> str:
     return "ERROR"
 
 
-def print_version(ctx: Context, _aparam: AnyStr, avalue: AnyStr) -> None:
-    """Print package version and exits.
-
-    Parameters
-    ----------
-    ctx : Context
-        click context object
-    _aparam : AnyStr
-        dunno
-    avalue : AnyStr
-        dunno
-    """
-    if not avalue or ctx.resilient_parsing:
-        return
-    click.echo(VERSION)
-    ctx.exit()
-
-
 @click.command()
-@click.option("key", "-k", type=str, required=True, help="Specify key")
-@click.option("message", "-m", type=str, required=True, help="Specify message")
+@click.option("--key", "-k", type=str, required=True, help="Specify key")
+@click.option("--message", "-m", type=str, required=True, help="Specify message")
+@click.option("--quiet/--no-quiet", "-q", default=False, help="Specify quiet flag")
 @click.option(
-    "suppress",
+    "--suppress",
     "-s",
-    default=CONST_HOUR,
+    default=CONST_DAY,
     help="Specify seconds to suppress (default 86400 [one day])",
 )
 @click.option(
-    "level",
+    "--level",
     "-l",
     default="ERROR",
     help="Specify one of CRITICAL, ERROR, WARNING, INFO, DEBUG (default: ERROR)",
 )
 @click.option(
-    "log_fn",
+    "--log_fn",
     "-f",
     type=str,
     required=False,
@@ -95,6 +78,7 @@ def log(
     ctx: Context,
     key: str,
     message: str,
+    quiet: bool,
     suppress: int,
     level: str,
     log_fn: Optional[str],
@@ -109,6 +93,7 @@ def log(
         label=log_label(level),
         suppress=suppress,
         logfn=log_fn,
+        quiet=quiet,
     )
     sys.exit(0)
 
