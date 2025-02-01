@@ -59,7 +59,7 @@ optional = true
 
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=7.0,<9.0"
-sphinx-autodoc-typehints = ">=1.24,<3.0"
+sphinx-autodoc-typehints = ">=1.24,<4.0"
 m2r2 = "^0.3"
 
 [build-system]
