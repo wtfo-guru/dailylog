@@ -40,7 +40,7 @@ tomli = "^2.0.1"
 optional = true
 
 [tool.poetry.group.test.dependencies]
-isort = "^5.13"
+isort = "^6.0"
 black = ">=23.12,<25.0"
 mypy = "^1.9"
 wemake-python-styleguide = "^1.0.0"
