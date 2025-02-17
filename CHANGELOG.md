@@ -8,9 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.0] - 2024-07-03
+## [0.2.2] - 2024-07-03
 
-- Added quiet option to log command
+### Added
+
+- support for python >= 3.9
+
+## [0.2.1] - 2024-07-03
+
+### Added
+
+- quiet option to log command
+
+### Removed
+
+- support for python < 3.1O
 
 ## [0.2.0] - 2024-07-03
 
