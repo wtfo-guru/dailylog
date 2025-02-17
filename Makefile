@@ -1,8 +1,9 @@
 SHELL:=/usr/bin/env bash
 
-PROJECT_NAME ?= $(shell basename $$(git rev-parse --show-toplevel) | sed -e "s/^python-//")
-PACKAGE_DIR = dailylog1
-PROJECT_VERSION ?= $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'} | tr '-' '.')
+PROJECT_NAME = $(shell head -10 pyproject.toml|grep ^name | awk '{print $$NF}'|tr -d '"')
+PROJECT_VERSION = $(shell head -10 pyproject.toml|grep ^version | awk '{print $$NF}'|tr -d '"')
+BUMP_VERSION = $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'} | tr '-' '.')
+CONST_VERSION = $(shell grep ^VERSION $(PROJECT_NAME)/constants.py | awk '{print $$NF}'|tr -d '"')
 TEST_MASK = tests
 GITHUB_ORG ?= wtf-guru
 
@@ -16,20 +17,31 @@ update:
 .PHONY: vars
 vars:
 	@echo "PROJECT_NAME: $(PROJECT_NAME)"
-	@echo "PACKAGE_DIR: $(PACKAGE_DIR)"
 	@echo "PROJECT_VERSION: $(PROJECT_VERSION)"
+	@echo "BUMP_VERSION: $(BUMP_VERSION)"
+	@echo "CONST_VERSION: $(CONST_VERSION)"
+
+.PHONY: version-sanity
+version-sanity:
+ifneq ($(PROJECT_VERSION), $(BUMP_VERSION))
+	$(error Version mismatch PROJECT_VERSION != BUMP_VERSION)
+endif
+ifneq ($(PROJECT_VERSION), $(CONST_VERSION))
+	$(error Version mismatch PROJECT_VERSION != CONST_VERSION)
+endif
+	@echo "Versions are equal $(PROJECT_VERSION), $(BUMP_VERSION), $(CONST_VERSION)"
 
 .PHONY: black
 black:
-	poetry run isort $(PACKAGE_DIR) $(TEST_MASK)
-	poetry run black $(PACKAGE_DIR) $(TEST_MASK)
+	poetry run isort $(PROJECT_NAME) $(TEST_MASK)
+	poetry run black $(PROJECT_NAME) $(TEST_MASK)
 
 .PHONY: mypy
 mypy: black
-	poetry run mypy $(PACKAGE_DIR) $(TEST_MASK)
+	poetry run mypy $(PROJECT_NAME) $(TEST_MASK)
 
 lint: mypy
-	poetry run flake8 $(PACKAGE_DIR) $(TEST_MASK)
+	poetry run flake8 $(PROJECT_NAME) $(TEST_MASK)
 	poetry run doc8 -q docs
 
 sunit:
@@ -56,6 +68,7 @@ ghtest: lint package unit
 publish: clean-build test
 	manage-tag.sh -u v$(PROJECT_VERSION)
 	poetry publish --build
+	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
 
 publish-test: clean-build test
 	manage-tag.sh -u v$(PROJECT_VERSION)
@@ -63,7 +76,6 @@ publish-test: clean-build test
 
 .PHONY: build
 build: clean-build test
-	manage-tag.sh -u v$(PROJECT_VERSION)
 	poetry build
 	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
 
