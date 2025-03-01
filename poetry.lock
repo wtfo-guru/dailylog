@@ -1330,13 +1330,13 @@ testing = ["fields", "hunter", "process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "pytest-print"
-version = "1.0.2"
+version = "1.1.0"
 description = "pytest-print adds the printer fixture you can use to print messages to the user (directly to the pytest runner, not stdout)"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest_print-1.0.2-py3-none-any.whl", hash = "sha256:3ae7891085dddc3cd697bd6956787240107fe76d6b5cdcfcd782e33ca6543de9"},
-    {file = "pytest_print-1.0.2.tar.gz", hash = "sha256:2780350a7bbe7117f99c5d708dc7b0431beceda021b1fd3f11200670d7f33679"},
+    {file = "pytest_print-1.1.0-py3-none-any.whl", hash = "sha256:ec82a8bbe5e1d4f6b3a287c2c119de7e5cdf57a31981e9dba2a4809c5829bb5e"},
+    {file = "pytest_print-1.1.0.tar.gz", hash = "sha256:15cf4236c735a8f1865403f7a9fbbb95f6b6b98f3759046f9f30a24c8a32018d"},
 ]
 
 [package.dependencies]
@@ -2048,4 +2048,4 @@ types-pyyaml = ">=6.0.12,<7.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "ad3aadf8fc667e005c739e68c1ede042acb6c6fd52fd1f65ef1bbcd4b5889d3f"
+content-hash = "0119fe45deea961364ace3fff3655c1d5a77199c99389d80fdd39f0f9d8f0915"
