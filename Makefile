@@ -1,8 +1,8 @@
 SHELL:=/usr/bin/env bash
 
-PROJECT_NAME = $(shell head -10 pyproject.toml|grep ^name | awk '{print $$NF}'|tr -d '"')
+PROJECT_NAME = $(shell head -10 pyproject.toml|grep ^name | awk '{print $$NF}'|tr -d '"' | tr '-' '_')
 PROJECT_VERSION = $(shell head -10 pyproject.toml|grep ^version | awk '{print $$NF}'|tr -d '"')
-BUMP_VERSION = $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'} | tr '-' '.')
+BUMP_VERSION = $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'})
 CONST_VERSION = $(shell grep ^VERSION $(PROJECT_NAME)/constants.py | awk '{print $$NF}'|tr -d '"')
 TEST_MASK = tests
 GITHUB_ORG ?= wtf-guru
@@ -60,24 +60,24 @@ safety:
 	poetry run safety scan --full-report
 
 .PHONY: test
-test: lint package unit
+test: lint package safety unit
 
 .PHONY: ghtest
 ghtest: lint package unit
 
-publish: clean-build test
-	manage-tag.sh -u v$(PROJECT_VERSION)
+publish: version-sanity clean-build test
 	poetry publish --build
-	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
-
-publish-test: clean-build test
+	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl
 	manage-tag.sh -u v$(PROJECT_VERSION)
+
+publish-test: version-sanity clean-build test
 	poetry publish --build -r test-pypi
+	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl
 
 .PHONY: build
-build: clean-build test
+build: version-sanity clean-build test
 	poetry build
-	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
+	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl
 
 .PHONY: docs
 docs:
