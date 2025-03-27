@@ -1,15 +1,26 @@
-[tool.poetry]
+[project]
 name = "dailylog1"
-version = "0.3.1-dev0"
 description = ""
-authors = ["Quien Sabe <qs5779@mail.com>"]
-readme = "README.md"
-
-# homepage = "https://github.com/wtfo-guru/wtforglib"
-# documentation = "https://wtforglib.readthedocs.io/en/stable"
-
 keywords = ["logging"]
+version = "0.4.0-dev0"
+dynamic = ["classifiers"]
+readme = "README.md"
+authors = [{name = "Quien Sabe", email = "qs5779@mail.com"}]
+requires-python = '>=3.10,<4.0'
+dependencies = [
+  'click (>=8.1.0,<9.0.0)',
+  'loguru (>=0.7.2,<0.8.0)',
+  'wtforglib (>=1.0.0,<2.0.0)'
+]
 
+[project.urls]
+homepage = "https://github.com/wtfo-guru/dailylog"
+documentation = "https://dailylog.readthedocs.io/en/stable"
+
+[project.scripts]
+dailylog = "dailylog1.cli:main"
+
+[tool.poetry]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3 :: Only",
@@ -25,16 +36,7 @@ packages = [
     { include = "dailylog1" },
     { include = "dailylog1/py.typed" },
 ]
-
-[tool.poetry.scripts]
-dailylog = "dailylog1.cli:main"
-
-[tool.poetry.dependencies]
-python = ">=3.10,<4.0"
-click = "^8.1.0"
-loguru = "^0.7.2"
-wtforglib = "^1.0.0"
-tomli = "^2.0.1"
+requires-poetry = '>=2.0'
 
 [tool.poetry.group.test]
 optional = true
@@ -53,6 +55,8 @@ pytest-click = "^1.1.0"
 pytest-print = "^1.0.0"
 pyfakefs = "^5.3.0"
 # pip = "^24.0"
+nitpick = "^0.35.0"
+darglint = "^1.8.1"
 
 [tool.poetry.group.docs]
 optional = true
@@ -60,10 +64,11 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=7.0,<9.0"
 sphinx-autodoc-typehints = ">=1.24,<4.0"
-m2r2 = "^0.3"
+sphinx-mdinclude = "^0.6.2"
+tomli = "^2.0"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ['poetry-core (>=2.0)']
 build-backend = "poetry.core.masonry.api"
 
 [tool.nitpick]

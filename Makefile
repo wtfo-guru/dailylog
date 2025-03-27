@@ -2,7 +2,8 @@ SHELL:=/usr/bin/env bash
 
 PROJECT_NAME = $(shell head -10 pyproject.toml|grep ^name | awk '{print $$NF}'|tr -d '"' | tr '-' '_')
 PROJECT_VERSION = $(shell head -10 pyproject.toml|grep ^version | awk '{print $$NF}'|tr -d '"')
-BUMP_VERSION = $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'})
+WHEEL_VERSION = $(shell echo $(PROJECT_VERSION)|sed -e 's/-dev/.dev/')
+BUMP_VERSION = $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF}')
 CONST_VERSION = $(shell grep ^VERSION $(PROJECT_NAME)/constants.py | awk '{print $$NF}'|tr -d '"')
 TEST_MASK = tests
 GITHUB_ORG ?= wtf-guru
@@ -18,6 +19,7 @@ update:
 vars:
 	@echo "PROJECT_NAME: $(PROJECT_NAME)"
 	@echo "PROJECT_VERSION: $(PROJECT_VERSION)"
+	@echo "WHEEL_VERSION: $(WHEEL_VERSION)"
 	@echo "BUMP_VERSION: $(BUMP_VERSION)"
 	@echo "CONST_VERSION: $(CONST_VERSION)"
 
@@ -52,32 +54,41 @@ unit:
 
 .PHONY: package
 package:
-	poetry check
+	poetry check --strict
 	poetry run pip check
+
+
+publish: build
+	manage-tag.sh -u v$(PROJECT_VERSION)
+	gh release create v$(PROJECT_VERSION) --generate-notes
+	poetry publish
+
+publish-test: build
+	poetry publish -r test-pypi
 
 .PHONY: safety
 safety:
 	poetry run safety scan --full-report
 
+.PHONY: nitpick
+nitpick:
+	poetry run nitpick -p . check
+
+.PHONY: darglint
+darglint:
+	poetry run darglint $(PROJECT_NAME)
+
 .PHONY: test
-test: lint package safety unit
+test: nitpick lint package unit
 
 .PHONY: ghtest
 ghtest: lint package unit
 
-publish: version-sanity clean-build test
-	poetry publish --build
-	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl
-	manage-tag.sh -u v$(PROJECT_VERSION)
-
-publish-test: version-sanity clean-build test
-	poetry publish --build -r test-pypi
-	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl
-
 .PHONY: build
-build: version-sanity clean-build test
+build: version-sanity safety clean-build test
 	poetry build
-	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl
+	sync-wheels.sh dist/$(PROJECT_NAME)-$(WHEEL_VERSION)-py3-none-any.whl $(WHEELS)
+#	manage-tag.sh -u v$(PROJECT_VERSION)
 
 .PHONY: docs
 docs:

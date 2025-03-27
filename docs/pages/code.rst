@@ -12,11 +12,8 @@
 .. automodule:: dailylog1.config
     :members:
 
-.. automodule:: dailylog1.options
-    :members:
-
-.. automodule:: dailylog1.version
-    :members:
-
 .. automodule:: dailylog1.exceptions
+    :members:
+
+.. automodule:: dailylog1.options
     :members:
