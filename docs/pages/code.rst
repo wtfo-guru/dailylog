@@ -13,10 +13,6 @@
     :members:
 
 .. automodule:: dailylog1.options
-    :members:
-
-.. automodule:: dailylog1.version
-    :members:
 
 .. automodule:: dailylog1.exceptions
     :members:
