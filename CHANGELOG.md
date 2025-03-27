@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - docs conf.py, poetry >2.0 compatibility
 - shpinx build errors
+- build status link
 
 ## [0.3.0] - 2025-02-17
 
