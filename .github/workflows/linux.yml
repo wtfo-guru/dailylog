@@ -33,7 +33,6 @@ jobs:
     - name: Install Poetry
       uses: snok/install-poetry@v1
       with:
-        version: "2.1.1"
         virtualenvs-in-project: true
 
     - name: Set up cache
@@ -56,7 +55,7 @@ jobs:
     #     api-key: ${{ secrets.SAFETY_API_KEY }}
 
     - name: Run checks
-      run: make ghtest
+      run: make citest
 
     # Upload coverage to codecov: https://codecov.io/
     - name: Upload coverage to Codecov
