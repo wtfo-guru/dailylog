@@ -23,7 +23,7 @@ default_log: /home/superman/dailylog
 def test_cli(cli_runner):
     """Test cli help text."""
     # noinspection PyTypeChecker
-    test_result = cli_runner.invoke(main)
+    test_result = cli_runner.invoke(main, "--help")
     assert test_result.exit_code == 0
     assert not test_result.exception
     for regex in ("log", "set-default-log", CONST_ARG_SET_DEFAULT_LOG):
